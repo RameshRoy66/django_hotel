@@ -1,0 +1,7 @@
+{% include 'navbar.html' %}
+<div class="container py-5 text-center mt-5">
+  <h2 class="text-success">Thank You!</h2>
+<p class="fs-5">Your booking for <strong>{{ destination.name }} on {{ date|date:"F j, Y" }}</strong> has been received.</p>
+  <a href="/" class="btn btn-primary mt-3">Go to Home</a>
+</div>
+{% include 'footer.html' %}

@@ -1,0 +1,21 @@
+{% include 'navbar.html' %}
+    <section class="py-5 bg-white text-center">
+<div class="container py-5 mt-5">
+  <h2 class="text-center mb-4 text-primary">Popular Packages</h2>
+  <div class="row g-4">
+    {% for pack in packages %}
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ pack.name }}</h5>
+          <p class="card-text">{{ pack.details }}</p>
+          <p class="fw-bold text-primary">From ${{ pack.price }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+{% include 'footer.html' %}

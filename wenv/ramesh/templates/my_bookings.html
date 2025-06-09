@@ -1,0 +1,57 @@
+{% include 'navbar.html' %}
+
+<style>
+  body {
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    min-height: 100vh;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.15);
+  }
+  .booking-image {
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+</style>
+
+<div class="container py-5 mt-4">
+  <h2 class="text-center text-primary mb-4">My Bookings</h2>
+
+  {% if bookings %}
+    <div class="row">
+      {% for booking in bookings %}
+        <div class="col-md-6 col-lg-4">
+          <div class="glass-card">
+            {% if booking.destination %}
+              <img src="{{ booking.destination.image.url }}" alt="{{ booking.destination.name }}" class="booking-image">
+            {% endif %}
+            <h5 class="text-success">{{ booking.place }}</h5>
+            <p><strong>Travel Date:</strong> {{ booking.date|date:"F j, Y" }}</p>
+            <p><strong>Days:</strong> {{ booking.days }}</p>
+            <p><strong>Notes:</strong> {{ booking.notes|default:"-" }}</p>
+            <p class="text-muted small">Booking ID: #{{ booking.id }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-warning text-center">No bookings found.</div>
+    
+  {% endif %}
+</div>
+
+{% include 'footer.html' %}
