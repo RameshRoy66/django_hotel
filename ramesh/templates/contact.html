@@ -50,14 +50,19 @@
     <div class="col-md-10">
       <div class="contact-card">
         <h3 class="mb-4 text-primary text-center">Get In Touch</h3>
-        <form method="post" action="{% url 'submit_contact' %}">
+{% if rmessage %}
+  <div class="alert alert-warning message" role="alert">{{ rmessage }}</div>
+{% endif %}
+
+        <form method="post" action="contact_page">
           {% csrf_token %}
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+              <input type="text" name="name" class="form-control" placeholder="Your Name"  value="{{request.user.get_full_name}}">
+              <input type="hidden" name="uid" class="form-control" placeholder="Your Name" required value="{{request.user.id}}">
             </div>
             <div class="col-md-6">
-              <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+              <input type="email" name="email" class="form-control" placeholder="Your Email" required value="{{request.user.email}}">
             </div>
             <div class="col-md-12">
               <input type="text" name="subject" class="form-control" placeholder="Subject" required>

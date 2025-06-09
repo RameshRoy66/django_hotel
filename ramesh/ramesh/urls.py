@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app1.urls')),
     path('accounts/', include('app2.urls')),
+    path('panel/', include('app3.urls')),
 ]
 
 # Append media files route during development

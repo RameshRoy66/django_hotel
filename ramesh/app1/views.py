@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Destinations
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from .models import Booking, Destinations
+from .models import Booking, Destinations,Queries
 from django.utils import timezone
 from django.core.mail import send_mail
 
@@ -188,15 +188,26 @@ def send_test_email(request):
     return HttpResponse("Email sent successfully!")
 
 
-def contact_page(request):
-    return render(request, 'contact.html')
 
-def submit_contact(request):
+def contact_page(request):
     if request.method == "POST":
+        user_id = request.POST['uid']
         name = request.POST['name']
         email = request.POST['email']
         subject = request.POST['subject']
         message = request.POST['message']
+        created_date = timezone.now()
         # Handle saving to DB or sending email here
-        messages.success(request, 'Thanks for contacting us! We’ll get back to you soon.')
-        return redirect('contact')
+        query=Queries.objects.create(
+                user_id=user_id,
+                subject=subject,
+                message=message,
+                created_date=created_date,
+                name=name,
+                email=email
+        )
+        rmessage="Thanks for contacting us! We’ll get back to you soon."
+        return render(request,'contact.html',{'rmessage':rmessage})
+    else:
+        return render(request, 'contact.html')
+

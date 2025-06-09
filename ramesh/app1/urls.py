@@ -11,6 +11,6 @@ urlpatterns = [
     path('my_bookings', views.my_bookings, name='my_bookings'),
     path('sendemail', views.send_test_email, name='send_email'),
     path('contact_page', views.contact_page, name='contact_page'),
-    path('submit-contact/', views.submit_contact, name='submit_contact'),
+    # path('submit-contact', views.submit_contact, name='submit_contact'),
 
 ] 

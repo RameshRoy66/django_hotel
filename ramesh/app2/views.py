@@ -17,7 +17,11 @@ def login(request):
         if user  is not None:
             auth.login(request,user)
             # messages.info(request,'user Logined ')
-            return redirect('/')
+            # return redirect('/')
+            if user.is_superuser:
+                return redirect('/panel/')  # Change to your desired admin page
+            else:
+                return redirect('/')  # Regular user home
         else:
             messages.info(request,'Invalid Credientials')
             return redirect('login')

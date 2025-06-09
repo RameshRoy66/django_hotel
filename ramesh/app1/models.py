@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -22,3 +23,15 @@ class Booking(models.Model):
     notes = models.TextField()
     # CORRECTED LINE
     created_date = models.DateTimeField(null=True, blank=True)
+
+
+class Queries(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)  # change user_id to this FK
+    subject=models.CharField(max_length=100)
+    name=models.CharField(max_length=100,null=True)
+    email=models.EmailField(null=True)
+    message=models.TextField()
+    query_response=models.TextField(null=True, blank=True)
+    reponder_id=models.IntegerField(null=True, blank=True)
+    responder_name=models.CharField(max_length=100)
+    created_date=models.DateTimeField(null=True)
