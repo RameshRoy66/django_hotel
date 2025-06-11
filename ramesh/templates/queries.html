@@ -6,11 +6,11 @@
       <span style="position: absolute; left: 0; bottom: 0; width: 110px; height: 4px; background: #ffc107; border-radius: 2px;"></span>
     </h4>
 
-    <div class="table-responsive shadow rounded">
+    <div class="table-responsive shadow rounded p-3">
 
 
 
-       <table class="table table-bordered align-middle mb-0 mt-5">
+       <table id="example" class="table table-bordered align-middle mb-0 mt-5">
         <thead class="table-light">
           <tr>
             <th>Name</th>
@@ -76,7 +76,9 @@
   <div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form id="responseForm">
+        <form id="" method="post" action="queries">
+          {% csrf_token %}
+          
           <div class="modal-header">
             <h5 class="modal-title" id="responseModalLabel">Respond to Query</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -85,19 +87,21 @@
             <input type="hidden" id="queryId" name="queryId">
             <div class="mb-3">
               <label for="recipientName" class="form-label">Name</label>
-              <input type="text" class="form-control" id="recipientName" readonly>
+              <input type="text" class="form-control" id="recipientName" name="recipientName" readonly>
             </div>
             <div class="mb-3">
               <label for="querySubject" class="form-label">Subject</label>
-              <input type="text" class="form-control" id="querySubject" readonly>
+              <input type="text" class="form-control" id="querySubject" name="querySubject" readonly>
             </div>
              <div class="mb-3">
               <label for="querySubject" class="form-label">Message</label>
-              <input type="text" class="form-control" id="message" readonly>
+              <!-- <input type="text" class="form-control" id="message" readonly> -->
+              <textarea class="form-control" id="message" name="message" readonly rows="2" placeholder="Write your response here..." required></textarea>
+
             </div>
             <div class="mb-3">
               <label for="responseText" class="form-label">Response</label>
-              <textarea class="form-control" id="responseText" name="responseText" rows="4" placeholder="Write your response here..." required></textarea>
+              <textarea class="form-control" id="responseText" name="responseText" rows="2" placeholder="Write your response here..." required></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -131,18 +135,18 @@
   })
 
   // Handle form submission (demo only)
-  document.getElementById('responseForm').addEventListener('submit', function(e) {
-    e.preventDefault()
-    var response = document.getElementById('responseText').value.trim()
-    if(!response) {
-      alert('Please enter a response.')
-      return
-    }
-    // TODO: Send response to server via AJAX or form submit
+  // document.getElementById('responseForm').addEventListener('submit', function(e) {
+  //   e.preventDefault()
+  //   var response = document.getElementById('responseText').value.trim()
+  //   if(!response) {
+  //     alert('Please enter a response.')
+  //     return
+  //   }
+  //   // TODO: Send response to server via AJAX or form submit
 
-    // For demo, just close modal and alert success
-    var modal = bootstrap.Modal.getInstance(responseModal)
-    modal.hide()
-    alert('Response sent successfully!')
-  })
+  //   // For demo, just close modal and alert success
+  //   var modal = bootstrap.Modal.getInstance(responseModal)
+  //   modal.hide()
+  //   alert('Response sent successfully!')
+  // })
 </script>

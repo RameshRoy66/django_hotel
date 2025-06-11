@@ -1,46 +1,190 @@
 {% include 'panel_head.html' %}
 <main class="content" id="content" role="main">
-  <div class="container-fluid">
-    <h4 class="fw-bold mb-4 position-relative d-inline-block">
-      Available Packages
-      <span style="position: absolute; left: 0; bottom: 0; width: 120px; height: 4px; background: #198754; border-radius: 2px;"></span>
-    </h4>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <img src="https://source.unsplash.com/400x250/?goa,beach" class="card-img-top" alt="Goa Beach">
-          <div class="card-body">
-            <h5 class="card-title">Goa Beach Holiday</h5>
-            <p class="card-text">Enjoy sunny beaches, water sports, and vibrant nightlife in Goa.</p>
-            <span class="badge bg-primary">₹ 25,000</span>
+ 
+  <div class="d-flex justify-content-end">
+     <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#myModal"
+  >
+    Add New Package
+  </button>
+  </div>
+{% for message in messages %}
+  {% if 'package' in message.tags %}  
+          <!-- <div class="alert alert-warning message" role="alert">{{ rmessage }}</div> -->
+          <div class="alert alert-success alert-dismissible fade show mt-3">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{ message  }}</strong>
           </div>
+{% endif %}
+{% endfor %}
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Packages</h4>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
         </div>
-      </div>
 
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <img src="https://source.unsplash.com/400x250/?manali,mountains" class="card-img-top" alt="Manali Mountains">
-          <div class="card-body">
-            <h5 class="card-title">Manali Adventure</h5>
-            <p class="card-text">Explore snowy mountains, trekking, and adventure sports in Manali.</p>
-            <span class="badge bg-primary">₹ 18,500</span>
-          </div>
+       
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form  method="post"  action="packages" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+
+
+              <div class="col-sm-6">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                maxlength="100"
+                required
+              />
+            </div>
+            </div>
+
+              <div class="col-sm-6">
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Image URL</label>
+              <input
+                type="file"
+                class="form-control"
+                name="image"
+                id="image"
+                  accept="image/*"
+                maxlength="100"
+                required
+              />
+            </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                name="description"
+                id="description"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+
+              <div class="col-sm-6">
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                name="price"
+                id="price"
+                min="0"
+                required
+              />
+            </div>
+            </div>
+
+           
+              <div class="col-sm-6">
+            <div class="mb-3">
+              <label for="days" class="form-label">Days</label>
+              <input
+                type="number"
+                class="form-control"
+                name="days"
+                id="days"
+                min="0"
+                required
+              />
+            </div>
+            </div>
+
+             <div class="mb-3  ml-3 form-check" style="margin-left:15px">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                name="offer"
+                id="offer"
+              />
+              <label class="form-check-label" for="offer">Offer</label>
+            </div>
+
         </div>
-      </div>
+        </div>
 
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <img src="https://source.unsplash.com/400x250/?kerala,backwaters" class="card-img-top" alt="Kerala Backwaters">
-          <div class="card-body">
-            <h5 class="card-title">Kerala Backwaters</h5>
-            <p class="card-text">Relax with houseboats, lush greenery, and authentic culture in Kerala.</p>
-            <span class="badge bg-primary">₹ 22,000</span>
-          </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <input type="Submit" value="Save" class="btn btn-primary">
+          </form>
+            
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="container-fluid">
+    <h4 class="fw-bold mb-4 position-relative d-inline-block">
+      Available Packages
+      <span
+        style="
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 120px;
+          height: 4px;
+          background: #198754;
+          border-radius: 2px;
+        "
+      ></span>
+    </h4>
+
+    <div class="row g-4">
+          {%for r in data %}
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <img
+            src="{{r.image.url}}"
+            class="card-img-top"
+            alt="{{r.name}}"
+                            loading="lazy"
+          style="object-fit: cover; height: 220px"
+
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{r.name}}</h5>
+            <p class="card-text">
+             {{r.description}}
+            </p>
+            <span class="badge bg-primary">₹ {{r.price}}</span>
+          </div>
+        </div>
+      </div>
+          {%endfor%}
+
+
+
+    </div>
   </div>
 </main>
 {% include 'panel_foot.html' %}

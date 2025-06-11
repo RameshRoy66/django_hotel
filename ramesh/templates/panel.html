@@ -1,81 +1,130 @@
-
 {% include 'panel_head.html' %}
-  <!-- Main Content -->
-  <main class="content" id="content" role="main">
-    <div class="container-fluid">
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card p-4">
-            <h5 class="card-title fw-semibold mb-3">Total Bookings</h5>
-            <p class="fs-3 d-flex align-items-center text-primary fw-bold">
-              <i class="bi bi-calendar-check-fill me-3"></i>
-              <span class="count" data-target="128">0</span>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card p-4">
-            <h5 class="card-title fw-semibold mb-3">Pending Queries</h5>
-            <p class="fs-3 d-flex align-items-center text-warning fw-bold">
-              <i class="bi bi-question-circle-fill me-3"></i>
-              <span class="count" data-target="12">0</span>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card p-4">
-            <h5 class="card-title fw-semibold mb-3">Available Packages</h5>
-            <p class="fs-3 d-flex align-items-center text-success fw-bold">
-              <i class="bi bi-geo-alt-fill me-3"></i>
-              <span class="count" data-target="9">0</span>
-            </p>
-          </div>
+<!-- Main Content -->
+<main class="content" id="content" role="main">
+  <div class="container-fluid">
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card p-4">
+          <h5 class="card-title fw-semibold mb-3">Total Bookings</h5>
+          <p class="fs-3 d-flex align-items-center text-primary fw-bold">
+            <i class="bi bi-calendar-check-fill me-3"></i>
+            <span class="count" data-target="{{booking}}">0</span>
+          </p>
         </div>
       </div>
-
-      <div class="mt-5">
-        <h4 class="fw-bold mb-4 position-relative d-inline-block">
-          Recent Bookings
-          <span style="position: absolute; left: 0; bottom: 0; width: 60px; height: 4px; background: #0d6efd; border-radius: 2px;"></span>
-        </h4>
-        <div class="table-responsive mt-3 shadow rounded">
-          <table class="table table-bordered align-middle mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Destination</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>101</td>
-                <td>Ramesh Kumar</td>
-                <td>Goa</td>
-                <td>2025-06-12</td>
-                <td><span class="badge bg-success d-flex align-items-center"><i class="bi bi-check-circle-fill"></i> Confirmed</span></td>
-              </tr>
-              <tr>
-                <td>102</td>
-                <td>Divya Sharma</td>
-                <td>Manali</td>
-                <td>2025-06-14</td>
-                <td><span class="badge bg-warning text-dark d-flex align-items-center"><i class="bi bi-clock-fill"></i> Pending</span></td>
-              </tr>
-              <tr>
-                <td>103</td>
-                <td>Vijay Rao</td>
-                <td>Kerala</td>
-                <td>2025-06-20</td>
-                <td><span class="badge bg-danger d-flex align-items-center"><i class="bi bi-x-circle-fill"></i> Cancelled</span></td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col-md-3">
+        <div class="card p-4">
+          <h5 class="card-title fw-semibold mb-3">Pending Queries</h5>
+          <p class="fs-3 d-flex align-items-center text-warning fw-bold">
+            <i class="bi bi-question-circle-fill me-3"></i>
+            <span class="count" data-target="{{pending_count}}">0</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-4">
+          <h5 class="card-title fw-semibold mb-3">Resolved Queries</h5>
+          <p class="fs-3 d-flex align-items-center text-warning fw-bold">
+            <i class="bi bi-question-circle-fill me-3"></i>
+            <span class="count" data-target="{{resolved_count}}">0</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-4">
+          <h5 class="card-title fw-semibold mb-3">Available Packages</h5>
+          <p class="fs-3 d-flex align-items-center text-success fw-bold">
+            <i class="bi bi-geo-alt-fill me-3"></i>
+            <span class="count" data-target="{{destinations}}">0</span>
+          </p>
         </div>
       </div>
     </div>
-  </main>
+
+    <div class="mt-5">
+      <h4 class="fw-bold mb-4 position-relative d-inline-block">
+        Recent Bookings
+        <span
+          style="
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: #0d6efd;
+            border-radius: 2px;
+          "
+        ></span>
+      </h4>
+      <div class="table-responsive mt-3 shadow rounded p-3">
+        <table id="example" class="table table-bordered align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Destination</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in data%}
+            <tr>
+              <td>{{forloop.counter }}</td>
+              <td>{{r.name}}</td>
+              <td>{{r.place}}</td>
+              <td>{{r.date}}</td>
+              <td>
+                <span class="badge bg-success d-flex align-items-center"
+                  ><i class="bi bi-check-circle-fill me-1"></i> Confirmed</span
+                >
+              </td>
+              {% comment %}
+              <td>₹ {{r.place_price }}</td>
+              {% endcomment %}
+            </tr>
+            {% endfor %} {% comment %}
+            <tr>
+              <td>101</td>
+              <td>Ramesh Kumar</td>
+              <td>Goa</td>
+              <td>2025-06-12</td>
+              <td>
+                <span class="badge bg-success d-flex align-items-center"
+                  ><i class="bi bi-check-circle-fill"></i> Confirmed</span
+                >
+              </td>
+            </tr>
+            {% endcomment %} {% comment %}
+            <tr>
+              <td>102</td>
+              <td>Divya Sharma</td>
+              <td>Manali</td>
+              <td>2025-06-14</td>
+              <td>
+                <span
+                  class="badge bg-warning text-dark d-flex align-items-center"
+                  ><i class="bi bi-clock-fill"></i> Pending</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>103</td>
+              <td>Vijay Rao</td>
+              <td>Kerala</td>
+              <td>2025-06-20</td>
+              <td>
+                <span class="badge bg-danger d-flex align-items-center"
+                  ><i class="bi bi-x-circle-fill"></i> Cancelled</span
+                >
+              </td>
+            </tr>
+            {% endcomment %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
 
 {% include 'panel_foot.html' %}

@@ -85,9 +85,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_db2',
         'USER': 'root',
-        'PASSWORD': '',  # default XAMPP root password is empty
+        'PASSWORD': 'ramesh',  # default XAMPP root password is empty
         'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'PORT': '3307',
     }
 }
 
@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -137,6 +137,9 @@ STATICFILES_DIRS =[os.path.join(BASE_DIR,'static') ]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Add this at the bottom

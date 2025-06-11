@@ -23,10 +23,12 @@ class Booking(models.Model):
     notes = models.TextField()
     # CORRECTED LINE
     created_date = models.DateTimeField(null=True, blank=True)
+    name=models.CharField(max_length=100,null=True)
+    email=models.EmailField(null=True)
 
 
 class Queries(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)  # change user_id to this FK
+    user_id = models.IntegerField(null=True ,blank=True)  # change user_id to this FK
     subject=models.CharField(max_length=100)
     name=models.CharField(max_length=100,null=True)
     email=models.EmailField(null=True)

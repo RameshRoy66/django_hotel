@@ -55,6 +55,8 @@ def book_now(request):
             days = request.POST['days']
             notes = request.POST['notes']
             created_date = timezone.now()
+            name=request.user.get_full_name()
+            email=request.user.email
             # Save or send booking info here
              # Save data to the database
             booking=Booking.objects.create(
@@ -64,7 +66,9 @@ def book_now(request):
                 date=date,
                 days=days,
                 notes=notes,
-                created_date=created_date
+                created_date=created_date,
+                name=name,
+                email=email
             )
              # Send confirmation email
             # send_mail(
@@ -191,7 +195,9 @@ def send_test_email(request):
 
 def contact_page(request):
     if request.method == "POST":
-        user_id = request.POST['uid']
+        # user_id = request.POST['uid']
+         # Get user_id only if logged in
+        user_id = request.user.id if request.user.is_authenticated else None
         name = request.POST['name']
         email = request.POST['email']
         subject = request.POST['subject']
